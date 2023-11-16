@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  xonotic-server:
+    build: .
+    container_name: xonotic-server
+    ports:
+     - "26000:26000"
+    restart: always
