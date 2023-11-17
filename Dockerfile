@@ -1,18 +1,16 @@
 FROM ubuntu:22.04
-RUN apt-get update && apt-get install -y wget unzip
+RUN apt-get update \
+    && apt-get install -y wget unzip
 
-RUN useradd -ms /bin/bash xonotic && chown -R xonotic:xonotic /home/xonotic
+ENV GAME_URL="https://dl.xonotic.org/xonotic-0.8.6.zip"
 
-USER xonotic
-ENV HOME /home/xonotic
-RUN cd /home/xonotic \
-    && wget https://download.evil-ant-colony.org/xonotic/xonotic-0.8.6.zip \
-    && unzip /home/xonotic/xonotic-0.8.6.zip \
-    && rm -f /home/xonotic/xonotic-0.8.6.zip \
-    && mkdir -p /home/xonotic/.xonotic/data \
-    && cp /home/xonotic/Xonotic/server/server_linux.sh Xonotic \
-    && cp /home/xonotic/Xonotic/server/server.cfg /home/xonotic/.xonotic/data/ \
-    && sed -i -e "s|//net_address|net_address|g" -e "s|//port|port|g" /home/xonotic/.xonotic/data/server.cfg
+VOLUME /srv/Xonotic
+VOLUME /root/.xonotic/data
+
+RUN mkdir -p /root/.xonotic/data
+ADD start.sh /bin/start_xonotic.sh
+
 
 EXPOSE 26000
-CMD /home/xonotic/Xonotic/server_linux.sh
+
+CMD /bin/start_xonotic.sh

@@ -4,6 +4,12 @@ services:
   xonotic-server:
     build: .
     container_name: xonotic-server
+    volumes:
+      - ./Xonotic:/srv/Xonotic
+      - ./data:/root/.xonotic/data
     ports:
-     - "26000:26000"
+     - 26000:26000/udp
+     - 26000:26000/tcp
     restart: always
+    # environment:
+    #   - GAME_URL=https://download.evil-ant-colony.org/xonotic/xonotic-0.8.6.zip
