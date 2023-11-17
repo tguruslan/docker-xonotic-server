@@ -8,5 +8,5 @@ services:
       - ./Xonotic:/srv/Xonotic
       - ./data:/root/.xonotic/data
     ports:
-     - 26000:26000
+     - 26000:26000/udp
     restart: always
